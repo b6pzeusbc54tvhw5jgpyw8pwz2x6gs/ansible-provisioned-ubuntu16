@@ -13,7 +13,7 @@
     repo: ppa:jonathonf/vim
     state: present
   when: ansible_os_family == "Debian"
-  environment: "{{proxy_env if EXTRA_VAR_PROXY_SERVER_URL is defined or no_proxy_env}}"
+  environment: "{{proxy_env}}"
 
 - name: ensure vim packages is at the latest version for Debian
   become: true

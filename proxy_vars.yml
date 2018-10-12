@@ -1,0 +1,3 @@
+proxy_env:
+  https_proxy: "{{EXTRA_VAR_PROXY_SERVER_URL}}"
+  http_proxy: "{{EXTRA_VAR_PROXY_SERVER_URL}}"

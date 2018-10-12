@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - role: geerlingguy.docker
+  - role: ansible-role-docker
     become: true
     vars:
       docker_users:
