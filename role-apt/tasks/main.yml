@@ -11,6 +11,7 @@
 - name: Configure the Yarn APT key
   become: true
   apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+  environment: "{{proxy_env if EXTRA_VAR_PROXY_SERVER_URL is defined or no_proxy_env}}"
 
 - name: Add Yarn repository
   become: true
@@ -18,6 +19,7 @@
     repo: 'deb https://dl.yarnpkg.com/debian/ stable main'
     state: present
     update_cache: false
+  environment: "{{proxy_env if EXTRA_VAR_PROXY_SERVER_URL is defined or no_proxy_env}}"
 
 - name: ensure apt packages is at the latest version
   become: true
@@ -51,6 +53,7 @@
   become: true
   apt:
     deb: https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
+  environment: "{{proxy_env if EXTRA_VAR_PROXY_SERVER_URL is defined or no_proxy_env}}"
   when: ripgrep_is_installed.rc != 0 and ansible_os_family == "Debian"
 
 - name: Install a brew packages for Darwin
