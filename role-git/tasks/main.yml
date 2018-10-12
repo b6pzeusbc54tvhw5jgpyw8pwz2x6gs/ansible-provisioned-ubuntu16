@@ -16,6 +16,7 @@
     src: .gitconfig
     dest: ~/.gitconfig.before_insert_by_ansible
     mode: 0644
+    backup: true
   register: gitconfig_copy_result
 
 - name: copying .gitconfig
@@ -56,3 +57,13 @@
     dest: /usr/local/bin/p4
     mode: preserve
     remote_src: true
+
+- blockinfile:
+    marker: "  # {mark} ANSIBLE MANAGED BLOCK FOR GIT_PROXY"
+    path: "~{{ ansible_user_id }}/.gitconfig"
+    content: "{{ git_proxy }}"
+
+- blockinfile:
+    marker: "  # {mark} ANSIBLE MANAGED BLOCK FOR GIT_NO_PROXY"
+    path: "~{{ ansible_user_id }}/.gitconfig"
+    content: "{{ git_no_proxy }}"

@@ -1,3 +1,5 @@
+- include: configure.yml
+  when: EXTRA_VAR_PROXY_SERVER_URL is defined
 
 - name: "ready docker.server.d"
   file:

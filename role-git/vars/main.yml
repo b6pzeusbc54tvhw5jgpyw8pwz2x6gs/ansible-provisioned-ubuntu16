@@ -8,3 +8,6 @@ _git_p4_bin_src: |
   {% endif %}
 
 git_p4_bin_src: "{{ _git_p4_bin_src | trim }}"
+
+# git_proxy: role-proxy/vars/main.yml
+# git_no_proxy: role-proxy/vars/main.yml

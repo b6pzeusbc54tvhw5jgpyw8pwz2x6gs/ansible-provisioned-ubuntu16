@@ -1,6 +1,6 @@
-# ansible
+# ansible-provisioned-ubuntu16
 
-## install role
+## 1. Install role
 
 ```sh
 $ ansible-galaxy install --roles-path=.galaxy_roles geerlingguy.docker
@@ -9,25 +9,22 @@ $ ansible-galaxy install --roles-path=.galaxy_roles geerlingguy.ruby
 $ ansible-galaxy install --roles-path=.galaxy_roles Stouts.python 
 ```
 
-## hosts.yml example
+## 2. hosts.yml example
 
 ```yml
 all:
   hosts:
-    localhost:
+    pc1:
       ansible_port: 22
-      ansible_host: 127.0.0.1
-      ansible_user: ssohjiro
+      ansible_host: 10.251.12.101
+      ansible_user: user1
+    pc2:
+      ansible_port: 22
+      ansible_host: 10.251.12.102
+      ansible_user: user2
 ```
 
-## excute
-
-```sh
-$ ansible-playbook site.yml -i hosts.yml -k -K -vv
-$ ansible-playbook site.yml -i hosts.yml -k -K -t git
-```
-
-### extra variable
+### 3. Extra variable
 To parameterize some configure, you can provide extra variables as
 `--extra-vars` option.
 
@@ -39,8 +36,9 @@ All extra variable examples are below:
 ```yml
 # .extraValue.yml (is gitignored)
 EXTRA_VAR_UPDATE_VIM_PLUGIN: true                         # default: false
-EXTRA_VAR_PROXY_SERVER_URL: http://123.123.123.123:8080/  # default: ''
-EXTRA_VAR_CA_CERT: |                                      # default: ''
+EXTRA_VAR_PROXY_SERVER_URL: http://123.123.123.123:8080/
+EXTRA_VAR_NO_PROXY_SERVER_URL: https://private.company.gitlab.com/
+EXTRA_VAR_CA_CERT: |
     -----BEGIN CERTIFICATE-----
     MIIEzTCCA7WgAwIBAgIMVWI2fkPCMs08osgOMA0GCSqGSIb3DQEBCwUAMEwxCzAJ
     BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlB
@@ -55,7 +53,27 @@ EXTRA_VAR_CA_CERT: |                                      # default: ''
     9gxYys+LdKV3fpvsW9PPrHFLAgMBAAGjggHCMIIBvjAOBgNVHQ8BAf8EBAMCBaAw
     yXvQdjBielj8eWa3RojGApedMrJhjdt4GBHh4fFc2Vty
     -----END CERTIFICATE-----
-ansible_python_interpreter: "/usr/bin/python3"
+ansible_python_interpreter: /usr/bin/python3              # when vagrant
+```
+
+## 4. Excute
+
+```sh
+$ ansible-playbook site.yml -i hosts.yml -k -K -vv
+$ ansible-playbook site.yml -i hosts.yml -k -K -t git
+```
+
+
+## 5. Make Vagrant box file
+
+```
+$ vagrant up
+
+## package 하기 전에 git tag 를 따고 box 파일이름뒤에 `-tag` 를 붙인다.
+## 예를들어 태그가 `v2` 일때,
+$ git tag v2 -m "some update"
+$ vagrant package --output vagrant-ubuntu16-v2.box
+$ vagrant destroy
 ```
 
 ## Tip. yaml debugging
@@ -63,8 +81,4 @@ ansible_python_interpreter: "/usr/bin/python3"
 ```sh
 $ npx js-yaml tasks-vim.yml
 ```
-
-## If you want to use VPN
-- https://github.com/hwdsl2/docker-ipsec-vpn-server
-- https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#linux-vpn-clients
 

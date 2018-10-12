@@ -32,6 +32,8 @@
   register: touch_log
   changed_when: touch_log.diff.before.state != "file" or touch_log.diff.before.mode is defined
 
-
-
-
+# marker 가 여러줄이면 무조건 changed 되버리는 버그가 있다
+- blockinfile:
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR PROXY"
+    path: ~/.npmrc
+    content: "{{ node_npmrc_proxy }}"
