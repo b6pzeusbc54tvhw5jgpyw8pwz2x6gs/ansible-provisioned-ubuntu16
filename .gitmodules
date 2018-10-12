@@ -4,3 +4,6 @@
 [submodule "ansible-role-docker"]
 	path = ansible-role-docker
 	url = https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/ansible-role-docker.git
+[submodule "Stouts.python"]
+	path = Stouts.python
+	url = https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/Stouts.python.git
