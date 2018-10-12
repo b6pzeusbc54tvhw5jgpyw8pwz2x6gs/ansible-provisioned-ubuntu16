@@ -1,3 +1,6 @@
 [submodule "ansible-role-zsh"]
 	path = ansible-role-zsh
 	url = https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/ansible-role-zsh.git
+[submodule "ansible-role-docker"]
+	path = ansible-role-docker
+	url = https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/ansible-role-docker.git
