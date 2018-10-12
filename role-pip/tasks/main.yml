@@ -9,7 +9,7 @@
   become: true
   pip:
     executable: pip3.6
-    extra_args:
+    extra_args: "{{proxy_args_pip}}"
     state: latest
     name:
       - awscli
