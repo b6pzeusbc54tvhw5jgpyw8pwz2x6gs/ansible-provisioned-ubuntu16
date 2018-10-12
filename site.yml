@@ -18,6 +18,13 @@
       become: true
       when: EXTRA_VAR_PROXY_SERVER_URL is defined
 
+    - name: delete certificate if proxy is not used
+      file:
+        path: '{{ ca_path[ansible_os_family][ansible_distribution_major_version|int] }}/company.crt'
+        state: absent
+      become: true
+      when: EXTRA_VAR_PROXY_SERVER_URL is not defined
+
     - name: update trusted ca debian
       shell: /usr/sbin/update-ca-certificates
       when: ansible_os_family == "Debian"
@@ -28,15 +35,6 @@
       when: ansible_os_family == "RedHat"
       become: true
 
-    - name: delete certificate if proxy is not used
-      file:
-        path: '{{ ca_path[ansible_os_family][ansible_distribution_major_version|int] }}/company.crt'
-        state: absent
-      become: true
-      when: EXTRA_VAR_PROXY_SERVER_URL is not defined
-      notify:
-        - update trusted ca debian
-        - update trusted ca redhat
 
 
   roles:

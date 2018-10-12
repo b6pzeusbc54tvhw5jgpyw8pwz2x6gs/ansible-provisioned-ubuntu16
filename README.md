@@ -76,9 +76,22 @@ $ vagrant package --output vagrant-ubuntu16-v2.box
 $ vagrant destroy
 ```
 
-## Tip. yaml debugging
+## Tip1. yaml debugging
 
 ```sh
+$ yarn
 $ npx js-yaml tasks-vim.yml
+```
+
+## Tip2. proxy
+**Vagrant** box download 시, plugin download 시 proxy setting 예제
+
+```sh
+export SSL_CERT_FILE=company.crt
+export CURL_CA_BUNDLE=company.crt
+export HTTP_PROXY=http://123.123.123.123:8080/
+export HTTPS_PROXY=http://123.123.123.123:8080/
+export http_proxy=http://123.123.123.123:8080/
+export https_proxy=http://123.123.123.123:8080/
 ```
 

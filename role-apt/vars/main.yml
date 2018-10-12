@@ -1,0 +1,15 @@
+
+proxy_env:
+  https_proxy: |
+    {% if EXTRA_VAR_PROXY_SERVER_URL is defined %}
+    {{EXTRA_VAR_PROXY_SERVER_URL}}
+    {% else %}
+    {% endif %}
+  http_proxy: |
+    {% if EXTRA_VAR_PROXY_SERVER_URL is defined %}
+    {{EXTRA_VAR_PROXY_SERVER_URL}}
+    {% else %}
+    {% endif %}
+
+no_proxy_env:
+  a: b

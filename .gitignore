@@ -9,3 +9,6 @@ hosts.yml
 ubuntu-xenial-16.04-cloudimg-console.log
 .vagrant
 *.box
+
+yarn.lock
+node_modules/

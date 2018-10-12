@@ -5,6 +5,8 @@
     repo: ppa:aacebedo/fasd
     state: present
     update_cache: false
+  environment: "{{proxy_env if EXTRA_VAR_PROXY_SERVER_URL is defined or no_proxy_env}}"
+
 
 - name: Configure the Yarn APT key
   become: true

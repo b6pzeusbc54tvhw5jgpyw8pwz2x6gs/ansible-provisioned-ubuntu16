@@ -1,0 +1,10 @@
+{
+  "name": "ansible-provisioned-ubuntu16",
+  "main": "index.js",
+  "repository": "https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/ansible-provisioned-ubuntu16.git",
+  "author": "Alfred UC <b6pzeusbc54tvhw5jgpyw8pwz2x6gs@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "js-yaml": "^3.12.0"
+  }
+}

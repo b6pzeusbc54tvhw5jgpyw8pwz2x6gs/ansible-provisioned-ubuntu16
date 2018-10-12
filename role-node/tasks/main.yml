@@ -23,17 +23,9 @@
     nvm install 8
   when: node_install.rc != 0
 
-- name: touch .npmrc
-  file:
-    path: "{{ ansible_env.HOME }}/.npmrc"
-    state: touch
-    mode: 0644
-  # https://github.com/ansible/ansible-modules-core/issues/170
-  register: touch_log
-  changed_when: touch_log.diff.before.state != "file" or touch_log.diff.before.mode is defined
-
 # marker 가 여러줄이면 무조건 changed 되버리는 버그가 있다
 - blockinfile:
     marker: "# {mark} ANSIBLE MANAGED BLOCK FOR PROXY"
-    path: ~/.npmrc
+    path: "{{ ansible_env.HOME }}/.npmrc"
     content: "{{ node_npmrc_proxy }}"
+    create: true
