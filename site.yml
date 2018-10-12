@@ -17,6 +17,7 @@
         mode: 0644
       become: true
       when: EXTRA_VAR_PROXY_SERVER_URL is defined
+      register: copy_crt
 
     - name: delete certificate if proxy is not used
       file:
@@ -24,18 +25,17 @@
         state: absent
       become: true
       when: EXTRA_VAR_PROXY_SERVER_URL is not defined
+      register: delete_crt
 
     - name: update trusted ca debian
       shell: /usr/sbin/update-ca-certificates
-      when: ansible_os_family == "Debian"
+      when: ansible_os_family == "Debian" and (copy_crt.changed or delete_crt.changed)
       become: true
 
     - name: update trusted ca redhat
       shell: /bin/update-ca-trust
-      when: ansible_os_family == "RedHat"
+      when: ansible_os_family == "RedHat" and (copy_crt.changed or delete_crt.changed)
       become: true
-
-
 
   roles:
     # 프록시 환경에서 프로비저닝 하기 위해

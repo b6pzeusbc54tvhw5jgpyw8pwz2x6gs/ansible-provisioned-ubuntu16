@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
     ansible.extra_vars = ".extraValue.yml"
-    ansible.verbose="-vvv"
+    ansible.verbose="-v"
   end
 
   config.vm.provision "shell", name: "clean", inline: <<-SHELL
