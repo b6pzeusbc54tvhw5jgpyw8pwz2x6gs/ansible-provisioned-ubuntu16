@@ -5,27 +5,6 @@
 - include_vars: not_proxy_vars.yml
   when: EXTRA_VAR_PROXY_SERVER_URL is not defined
 
-- name: ensure ppa:aacebedo/fasd is present
-  become: true
-  apt_repository:
-    repo: ppa:aacebedo/fasd
-    state: present
-    update_cache: false
-  environment: "{{proxy_env}}"
-
-- name: Configure the Yarn APT key
-  become: true
-  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
-  environment: "{{proxy_env}}"
-
-- name: Add Yarn repository
-  become: true
-  apt_repository:
-    repo: 'deb https://dl.yarnpkg.com/debian/ stable main'
-    state: present
-    update_cache: false
-  environment: "{{proxy_env}}"
-
 - name: ensure apt packages is at the latest version
   become: true
   when: ansible_os_family == "Debian"
@@ -47,6 +26,28 @@
       - git-extras
       - fasd
       - tree
+      - tmux
+
+- name: ensure ppa:aacebedo/fasd is present
+  become: true
+  apt_repository:
+    repo: ppa:aacebedo/fasd
+    state: present
+    update_cache: false
+  environment: "{{proxy_env}}"
+
+- name: Configure the Yarn APT key
+  become: true
+  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+  environment: "{{proxy_env}}"
+
+- name: Add Yarn repository
+  become: true
+  apt_repository:
+    repo: 'deb https://dl.yarnpkg.com/debian/ stable main'
+    state: present
+    update_cache: false
+  environment: "{{proxy_env}}"
 
 - name: Check if ripgrep is installed
   shell: "command -v rg || which rg"
@@ -76,6 +77,7 @@
       - git-extras
       - fasd
       - tree
+      - tmux
     state: latest
     update_homebrew: no
 

@@ -3,12 +3,12 @@
   become: true
   vars:
     python_ppa: ppa:deadsnakes/ppa
-    python_versions: ["3.6"]
+    python_versions: [3.6]
 
 - name: ensure pip packages
   become: true
   pip:
-    executable: pip3.6
+    executable: pip3
     extra_args: "{{proxy_args_pip}}"
     state: latest
     name:

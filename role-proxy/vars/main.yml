@@ -10,14 +10,6 @@ zsh_proxyrc_unset: |
     unset HTTPS_PROXY
     unset HTTP_PROXY
 
-ca_path:
-  RedHat:
-    6: /usr/local/share/ca-certificates
-    7: /etc/pki/ca-trust/source/anchors
-  Debian:
-    # maybe for ubuntu 16
-    16: /usr/local/share/ca-certificates
-
 apt_company_proxy: |
     {% if EXTRA_VAR_PROXY_SERVER_URL is defined %}
     Acquire::http::Proxy "{{EXTRA_VAR_PROXY_SERVER_URL}}";

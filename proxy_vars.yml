@@ -2,8 +2,3 @@ proxy_env:
   https_proxy: "{{EXTRA_VAR_PROXY_SERVER_URL}}"
   http_proxy: "{{EXTRA_VAR_PROXY_SERVER_URL}}"
 
-proxy_args_pip: |
-  {% if EXTRA_VAR_PROXY_SERVER_URL is defined %}
-  --proxy {{EXTRA_VAR_PROXY_SERVER_URL}} --cert ~/company.crt
-  {% else %}
-  {% endif %}

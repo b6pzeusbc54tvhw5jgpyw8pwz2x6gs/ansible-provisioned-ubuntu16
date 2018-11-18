@@ -95,3 +95,17 @@ export http_proxy=http://123.123.123.123:8080/
 export https_proxy=http://123.123.123.123:8080/
 ```
 
+## Tip2. sshpass on MACOS
+
+```sh
+$ brew install hudochenkov/sshpass/sshpass
+```
+
+## Tip3. ansible examples
+
+```
+$ ansible -i hosts.yml -m setup -a 'gather_subset=!facter,!ohai filter=ansible_distribution*' all
+```
+
+- https://github.com/hudochenkov/homebrew-sshpass
+

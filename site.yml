@@ -2,29 +2,45 @@
 
 ---
 - hosts: all
-  handlers:
+
+  vars:
+    ca_path:
+      RedHat:
+        6: /usr/local/share/ca-certificates
+        7: /etc/pki/ca-trust/source/anchors
+      Debian:
+        # maybe for ubuntu 16
+        "16": /usr/local/share/ca-certificates
+        "stretch/sid": /usr/local/share/ca-certificates
 
   pre_tasks:
     - debug:
         msg: pre_tasks
 
+    - debug:
+        var: ansible_distribution_major_version
+    - debug:
+        var: ansible_os_family
+    - debug:
+        var: ca_path["Debian"][16]
+
     - name: copy certificate authority to trusted ca path of the os if proxy is used
+      when: EXTRA_VAR_CA_CERT is defined
       copy:
         content: "{{ EXTRA_VAR_CA_CERT }}"
-        dest: '{{ ca_path[ansible_os_family][ansible_distribution_major_version|int] }}/company.crt'
+        dest: "{{ ca_path[ansible_os_family][ansible_distribution_major_version] }}/company.crt"
         owner: root
         group: root
         mode: 0644
       become: true
-      when: EXTRA_VAR_PROXY_SERVER_URL is defined
       register: copy_crt
 
     - name: delete certificate if proxy is not used
+      when: EXTRA_VAR_CA_CERT is not defined
       file:
-        path: '{{ ca_path[ansible_os_family][ansible_distribution_major_version|int] }}/company.crt'
+        path: "{{ ca_path[ansible_os_family][ansible_distribution_major_version] }}/company.crt"
         state: absent
       become: true
-      when: EXTRA_VAR_PROXY_SERVER_URL is not defined
       register: delete_crt
 
     - name: update trusted ca debian
@@ -41,7 +57,7 @@
     # 프록시 환경에서 프로비저닝 하기 위해
     # 먼저 프록시 셋팅이 필요한 것들을 role-proxy 를 통해 셋팅 한다
     - { role: role-proxy, tags: 'proxy' }
-    - { role: role-apt, tags: 'apt', when: "ansible_os_family == 'Debian'" }
+    - { role: role-apt, tags: 'apt' }
     - { role: role-docker, tags: 'docker' }
     - { role: role-pip, tags: 'pip' }
     - { role: role-vim, tags: 'vim' }
